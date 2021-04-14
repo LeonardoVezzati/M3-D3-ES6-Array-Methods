@@ -179,7 +179,7 @@
             them in a cool way!
           </p>
           <p>
-            <a href="#" class="btn btn-primary my-2">Load Images</a>
+            <a href="#" onclick="getImage()" class="btn btn-primary my-2">Load Images</a>
             <a href="#" class="btn btn-secondary my-2">Load Secondary Images</a>
           </p>
         </div>
@@ -635,5 +635,67 @@
       integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s"
       crossorigin="anonymous"
     ></script>
+
+    <script>
+      let getImage = function() {
+        fetch("https://splashbase.herokuapp.com/api/v1/images/search?query=dog", {
+          method: "GET",
+        })
+          .then((response) => response.json())
+          .then((photo) => {
+            console.log(photo)
+            console.log(photo.images[0])
+            card = document.getElementsByClassName("card")
+            for(i=0;i<photo.images.length;i++){
+              let img = document.createElement("img")
+              img.src = photo.images[i].url
+              
+        
+              const svg = card[i].querySelector("svg")
+              card[i].replaceChild(img, svg)
+
+              // svg.remove()
+              // parent.innerHTML = `<img src="${photo.images[i].url}">` + parent.innerHTML
+            }
+            // let card = document.getElementsByClassName("card mb-4 shadow-sm")
+            // for (i=0;i<music.images.length;i++){
+            //   let img = document.createElement("img")
+            //   img.src = music.images.url[i]
+            //   document.body.appendChild(img)
+            //    card[i].appendChild(img)
+            // }
+              
+            // const row = document.querySelector(".row");
+            // row.innerText = "";
+            // console.log(music.data[0])
+            // myJSON = JSON.stringify(music.data[0])
+            // console.log(myJSON)
+            // myObj = JSON.parse(music)
+            // console.log(myObj)
+            // let myList = document.getElementById("myList")
+            //  for (let i = 0; i < music.data.length; i++) {
+            //     let songs = music.data[i].title;
+            //     li = document.createElement('li')
+            //     li.innerHTML= songs
+            //     myList.appendChild(li)
+              
+              
+            //   myJSON = JSON.stringify(music.data[i])
+              
+              
+            //   const songDiv = document.createElement("div");
+            //   songDiv.classList.add("col-12");
+            //   songDiv.classList.add("col-md-3");
+            //   // add <img src="https://...." />
+            //   songDiv.innerText = songs.title
+            //   row.appendChild(songDiv)
+            }
+          )
+          .catch((err) => {
+            console.error(err);
+          });
+      }
+    </script>
+
   </body>
 </html>
